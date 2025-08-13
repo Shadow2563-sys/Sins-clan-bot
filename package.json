@@ -1,0 +1,19 @@
+{
+  "name": "Sins",
+  "version": "1.0",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@whiskeysockets/baileys": "github:alibase77/XD-Baileys",
+    "chalk": "^4.1.2",
+    "pino-pretty": "^13.0.0"
+  }
+}
